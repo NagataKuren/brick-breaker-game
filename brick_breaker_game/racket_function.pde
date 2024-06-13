@@ -15,6 +15,6 @@ for (Ball ball : balls) {
       ball.dy = -ball.dy; // ボールのy速度を反転
     }
   }
-  
+  fill(255);
   rect(r_x, r_y, r_w, r_h); // ラケットを表示する
 }
