@@ -13,14 +13,39 @@ void setup() {
 
 void draw() {
   frameRate(165);
-  x = x + dx;
-  y = y + dy;
+
   background(192, 192, 255);
-  println(x,y);//x,yの値が代入されていない
+  // println(x,y,dx,dy);//x,yの値が代入されていない
   for(Ball ball : balls) {
     ball.update();
     ball.display();
     checkCollision(ball);
+    if (ball.x + b_w >= width) {
+      // ボールが左右の壁に当たったら跳ね返る
+      ball.dx = -ball.dx;
+      if (ball.y < 0) {
+        //ボールが上の壁に当たったら跳ね返る
+        ball.dy = -ball.dy;
+      }
+    }
+    // ballが赤か白か判定する
+    // 白で落ちたならリセット
+
+    if (ball.isOriginal == true) {
+      if (ball.y + b_h >= height) {
+        // remain--;//永遠にひかれ続ける
+        println("fall");
+        if (remain > 0) {
+          // initBall();//やっぱフリーズする
+        }
+      }
+    }
+    if (ball.isOriginal == !true) {
+      if (ball.y + b_h > height) {
+        ball.dy = -ball.dy;//赤のボールは画面底部に接触すると跳ね返る
+      }
+    }
+    println(ball.x, ball.dx);
   }
   fill(255);
   textSize(50);
@@ -30,20 +55,15 @@ void draw() {
   showBlocks(); //命が残っているブロックを表示する
   checkAndShowRacket(height-50); // ラケットの表示とボールの打ち返し処理
 
-  if (x < 0 || x + b_w >= width) {
-    dx = -dx;
-  }
-  // ボールが左右の壁に当たったら跳ね返る
-  if (y <= 0) {
-    dy = -dy;
-  }
-  if (y + b_h >= height) {
-    //動いていない
-    remain--;
-    if (remain > 0) {
-      initBall();
-    }
-  }
+  // if (y + b_h >= height) {
+    //   //動いていない
+    //   remain--;
+    //   if (remain > 0) {
+      //     // initBall();
+      //     println("落ちた");
+      //     println(x,y);
+      //   }
+    // }
   //ボールが上部の壁に当たったら跳ね返る
   if (remain < 1) {
     background(0);

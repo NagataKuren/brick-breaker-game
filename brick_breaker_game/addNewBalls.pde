@@ -1,18 +1,16 @@
 void addNewBalls(Ball originalBall) {
   // オリジナルボールの位置と速度を元に新しいボールを追加
- 
-    Ball newBall1 = new Ball(originalBall.x, originalBall.y, originalBall.dx, -originalBall.dy, originalBall.b_w, originalBall.b_h, false, color(255,0,0)); // 赤いボール（複製）
-    Ball newBall2 = new Ball(originalBall.x, originalBall.y, -originalBall.dx, originalBall.dy, originalBall.b_w, originalBall.b_h, false, color(255,0,0)); // 赤いボール（複製）
-    balls.add(newBall1);
-    balls.add(newBall2);
-    // originalBall.isOriginal = false; // オリジナルボールは複製後にオリジナルではなくなる
-  }
 
+  Ball newBall1 = new Ball(originalBall.x, originalBall.y, originalBall.dx, -originalBall.dy, originalBall.b_w, originalBall.b_h, false, color(255,0,0)); // 赤いボール（複製）
+  Ball newBall2 = new Ball(originalBall.x, originalBall.y, -originalBall.dx, originalBall.dy, originalBall.b_w, originalBall.b_h, false, color(255,0,0)); // 赤いボール（複製）
+  balls.add(newBall1);
+  balls.add(newBall2);
+  originalBall.isOriginal = false; // オリジナルボールは複製後にオリジナルではなくなる
+}
 
 void checkCollision(Ball ball) {
   if (ball.y + ball.b_h >= height) {
     if (remain > 0) {
-      // initBall();//ボールの初期化
     }
   }
   if (ball.x <= 0 || ball.x + ball.b_w >= width) {
@@ -38,11 +36,20 @@ class Ball {
     this.ballColor = ballColor;
   }
 
- void update() {
-  x += dx;
-  y += dy;
-}
-
+  void update() {
+    if (x + b_w >= width) {
+      // ボールが左右の壁に当たったら跳ね返る
+      dx = -dx;
+    }
+    if (y < 0) {
+        //ボールが上の壁に当たったら跳ね返る
+        dy = -dy;
+      }
+    x += dx;
+    y += dy;
+    // println(dx);
+  }
+  //x,yの値が代入されている
 
   void display() {
     fill(ballColor); // ボールの色を設定

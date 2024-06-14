@@ -10,7 +10,7 @@ void initBlock() {
     for(int column = 0;
     column < 24;
     column = column + 1) {
-      block[row][column] = 10;//ブロックの耐久
+      block[row][column] = 1;//ブロックの耐久
     }
   }
   bw = width / 25; // ブロックの幅を決める
@@ -39,7 +39,7 @@ void checkBlocks() {
             }
             block[row][column]--;
             if (block[row][column] <= 0) {
-              addNewBalls(ball);//ブロックが壊れたときにボールを追加
+               addNewBalls(ball);//ブロックが壊れたときにボールを追加
             }
             return;
           }
