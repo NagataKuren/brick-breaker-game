@@ -37,7 +37,7 @@ class Ball {
   }
 
   void update() {
-    if (x + b_w >= width) {
+    if (x < 0 || x + b_w > width) {
       // ボールが左右の壁に当たったら跳ね返る
       dx = -dx;
     }
@@ -47,9 +47,7 @@ class Ball {
       }
     x += dx;
     y += dy;
-    // println(dx);
   }
-  //x,yの値が代入されている
 
   void display() {
     fill(ballColor); // ボールの色を設定
